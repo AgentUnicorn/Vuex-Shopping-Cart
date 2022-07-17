@@ -1,23 +1,42 @@
 <template>
-    <nav>
-        <h1>Hello</h1>
-
-        <template v-if="authIsReady">
-            <div>
-                <router-link :class="{ active: $route.name === 'Home' }" to="/">Home</router-link> |
-            </div>
-
-            <div v-if="user">
-                <router-link :class="{ active: $route.name === 'Cart' }" to="/cart">Cart</router-link>
-                <span>Logged in as {{user.email}}</span>
-                <button @click="handleLogOut">Log out</button>
-            </div>
-
-            <div v-if="!user">
-                <router-link to="/signup">Sign Up</router-link>
-                <router-link to="/signin">Sign In</router-link>
-            </div>
-        </template>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container-fluid">
+            <template v-if="authIsReady">
+                <a class="navbar-brand">
+                    <router-link :class="{ active: $route.name === 'Home' }" to="/">Home</router-link>    
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav" v-if="user">
+                        <li class="nav-item">
+                            <a class="nav-link">
+                                <router-link :class="{ active: $route.name === 'Cart' }" to="/cart">Cart</router-link>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link">
+                                <span>Logged in as {{user.email}}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-danger" @click="handleLogOut">Log out</a>
+                        </li>                
+                    </ul>
+                    <ul class="navbar-nav" v-if="!user">
+                        <li class="nav-item">
+                            <a class="nav-link">
+                                <router-link to="/signup">Sign Up</router-link>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"><router-link to="/signin">Sign In</router-link></a>
+                        </li>                
+                    </ul>
+                </div>
+            </template>
+        </div>
     </nav>
 </template>
 

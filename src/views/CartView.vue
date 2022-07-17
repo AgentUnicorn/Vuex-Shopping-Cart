@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="cart-container">
         <h1>Your Cart</h1>
 
         <CartItemCart 
@@ -44,6 +44,19 @@
         .header {
             display: flex;
             justify-content: space-around;
+            align-items: center;
+
+            h3 {
+                font-weight: bold;
+            }
         }
     }
+.cart-container {
+    padding: 20px;
+
+    h1 {
+        font-weight: bold;
+        color: #42b983
+    }
+}
 </style>

@@ -1,0 +1,19 @@
+.logout-button {
+    padding: 10px;
+    background-color: #b23b3b;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.15rem;
+    border-radius: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.navbar-nav {
+    margin-left: auto;
+}
+.navbar-custom {
+    background-color: #42b983;
+    color: #fff
+}

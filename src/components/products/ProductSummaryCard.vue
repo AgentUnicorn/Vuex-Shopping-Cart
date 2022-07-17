@@ -1,11 +1,14 @@
 <template>
-    <div class="card">
-        <h3>{{ product.name }}</h3>
+    <div class="card" style="width: 18rem;">
+        <img :src="product.img_path" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{ productname }}</h5>
+            <h5 class="price">Price: ${{ product.price.toFixed(2) }}</h5>
+            <p class="card-text">{{ description }}.</p>
+            <p class="text-muted">{{ product.category }}</p>
 
-        <h5 class="price">Price: ${{ product.price.toFixed(2) }}</h5>
-        <p class="description">Description: {{ description }}</p>
-        <p class="text-muted">{{ product.category }}</p>
-        <button class="view-product-button" @click="$emit('view-product', product)">View</button>
+            <button class="view-product-button" @click="$emit('view-product', product)">View</button>
+        </div>
     </div>
 </template>
 
@@ -15,6 +18,9 @@ export default {
     computed: {
         description() {
             return this.product.description.substring(0, 150) + '...';
+        },
+        productname() {
+            return this.product.brand + ' ' + this.product.name;
         }
     }
 }
@@ -28,13 +34,10 @@ export default {
     border-radius: 5px;
     background-color: #fff;
     box-shadow: 0px 0px 5px gray;
+    text-align: left;
 
     h5.price {
         color: gray
-    }
-
-    p.description {
-        font-size: .85rem;
     }
 
     p.text-muted {

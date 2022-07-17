@@ -1,23 +1,31 @@
 <template>
     <div class="drawer-background" :class="{show: active}" @click="$emit('close-product-drawer')">
         <div class="drawer" :class="{show: active}">
-            <div class="drawer-close" @click="$emit('close-product-drawer')">
-                X
-            </div>
 
             <div v-if="product" class="product-details">
-                <h3 class="text-center">{{product.name}}</h3>
-                <p class="description">{{product.description}}</p>
-                <h3 class="text-center">${{product.price.toFixed(2)}}</h3>
+                <div class="card-button-container">
+                    <button class="drawer-close btn-danger" @click="$emit('close-product-drawer')">
+                        x
+                    </button>
+    
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <img :src="product.img_path" class="card-img-top" alt="...">
+                            <h5 class="card-title mt-2">{{product.name}}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">${{product.price.toFixed(2)}}</h6>
+                            <p class="card-text">{{product.description}}</p>
+                        </div>
+                    </div>
+                </div>
 
+                <hr>
                 <div class="cart-total" v-if="product_total">
-                    <h3>In Cart</h3>
-                    <h4>{{product_total}}</h4>
+                    <h3>In Cart: <span>{{product_total}}</span></h3>
                 </div>
 
                 <div class="button-container">
-                    <button class="remove" @click="removeFromCart()">Remove</button>
-                    <button class="add" @click="addToCart()">Add</button>
+                    <button class="btn btn-danger remove" @click="removeFromCart()">Remove</button>
+                    <button class="btn btn-success add" @click="addToCart()">Add</button>
                 </div>
             </div>
         </div>
@@ -44,6 +52,12 @@
 </script>
 
 <style lang="scss">
+    .card-button-container {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+    }
+
     .drawer-background {
         width: 100%;
         height: 100vh;
@@ -78,13 +92,15 @@
     }
 
     .drawer-close {
-        font-size: 1.5rem;
-        padding: 5px;
-        border-radius: 5px;
+        font-size: 1rem;
+        padding: 2px;
+        border-radius: 50%;
         right: 10px;
         border: 2px solid gray;
         color: gray;
-        width: 15px;
+        width: 30px;
+        height: 30px;
+        margin: 10px;
         float: right;
         cursor: pointer;
 
@@ -97,6 +113,7 @@
         display: flex;
         justify-content: center;
         flex-direction: column;
+        width: 100%;
         p.description {
             padding: 20px;
             line-height: 1.5rem;
@@ -111,6 +128,14 @@
                 margin: 0 5px 0 5px;
                 cursor: pointer;
             }
+        }
+    }
+
+    .cart-total {
+
+        span {
+            font-weight: bold;
+            color: #42b983;
         }
     }
 
