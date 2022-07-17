@@ -1,13 +1,17 @@
 import { createStore } from 'vuex'
 
 // firebase imports
-import {auth} from '../firebase/config'
+import {auth, db} from '../firebase/config'
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged
 } from 'firebase/auth'
+import {
+  collection,
+  getDocs,
+} from 'firebase/firestore'
 
 function updateLocalStorage(cart) {
   localStorage.setItem('cart', JSON.stringify(cart))
@@ -17,6 +21,7 @@ const store = createStore({
   state: {
     user: null,
     authIsReady: false,
+    products: [],
     cart: []
   },
   getters: {
@@ -41,6 +46,19 @@ const store = createStore({
     },
     setAuthIsReady (state) {
       state.authIsReady = true
+    },
+    //#endregion
+
+    //#region Products
+    setProduct (state, payload) {
+      state.products = payload
+    },
+    async loadProduct () {
+      console.log("Loading products mutation")
+      // state.products = payload
+      // console.log(state.products)
+      // state.products = payload
+     
     },
     //#endregion
 
@@ -110,7 +128,22 @@ const store = createStore({
       //async code
       await signOut(auth)
       context.commit('setUser', null)
-    }
+    },
+    //#endregion
+
+    //#region Products
+    async loadProduct (context) {
+      const querySnapshot = await getDocs(collection(db, "products"));
+      let resData = [];
+      querySnapshot.forEach((doc) => {
+        resData.push({
+          id: doc.id,
+          ...doc.data()
+        })
+      });
+
+      context.commit('setProduct', resData)
+    },
     //#endregion
   },
   modules: {
@@ -120,7 +153,6 @@ const store = createStore({
 const unsub = onAuthStateChanged(auth, (user) => {
   store.commit('setAuthIsReady', true)
   store.commit('setUser', user)
-
   // Run this func only once
   unsub()
 })
